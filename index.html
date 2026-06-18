@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AKARI | هویج پیر</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+
+        :root {
+            --orange: #FF6B35;
+            --orange-glow: rgba(255, 107, 53, 0.3);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* ===== PAGE 1: LANDING ===== */
+        .page-1 {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            background: radial-gradient(ellipse at center, #1a0a00 0%, #0a0a0a 70%);
+            z-index: 1;
+        }
+
+        .page-1.hidden {
+            display: none;
+        }
+
+        .floating-icons {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .float-icon {
+            position: absolute;
+            opacity: 0.15;
+            animation: floatAnim 12s ease-in-out infinite alternate;
+            filter: blur(1px);
+            font-size: 2rem;
+        }
+
+        /* 20 آیکون شناور */
+        .float-icon:nth-child(1) { top: 5%; left: 3%; font-size: 2.8rem; animation-duration: 14s; }
+        .float-icon:nth-child(2) { top: 15%; right: 2%; font-size: 2.2rem; animation-duration: 11s; animation-delay: 1s; }
+        .float-icon:nth-child(3) { top: 30%; left: 1%; font-size: 3.2rem; animation-duration: 16s; animation-delay: 2s; }
+        .float-icon:nth-child(4) { top: 45%; right: 1%; font-size: 2.5rem; animation-duration: 13s; animation-delay: 0.5s; }
+        .float-icon:nth-child(5) { top: 60%; left: 4%; font-size: 2rem; animation-duration: 15s; animation-delay: 3s; }
+        .float-icon:nth-child(6) { top: 75%; right: 3%; font-size: 2.8rem; animation-duration: 12s; animation-delay: 1.5s; }
+        .float-icon:nth-child(7) { top: 90%; left: 2%; font-size: 2.2rem; animation-duration: 17s; animation-delay: 0.8s; }
+        .float-icon:nth-child(8) { top: 8%; left: 50%; font-size: 2.5rem; animation-duration: 10s; animation-delay: 2.5s; }
+        .float-icon:nth-child(9) { top: 50%; left: 50%; font-size: 3rem; animation-duration: 14s; animation-delay: 1.2s; }
+        .float-icon:nth-child(10) { top: 85%; left: 55%; font-size: 2rem; animation-duration: 13s; animation-delay: 0.3s; }
+        .float-icon:nth-child(11) { top: 20%; left: 25%; font-size: 2.6rem; animation-duration: 15s; animation-delay: 2.2s; }
+        .float-icon:nth-child(12) { top: 70%; left: 80%; font-size: 2.4rem; animation-duration: 11s; animation-delay: 1.8s; }
+        .float-icon:nth-child(13) { top: 40%; left: 90%; font-size: 3.2rem; animation-duration: 16s; animation-delay: 0.6s; }
+        .float-icon:nth-child(14) { top: 10%; left: 75%; font-size: 2rem; animation-duration: 12s; animation-delay: 3.2s; }
+        .float-icon:nth-child(15) { top: 55%; left: 10%; font-size: 2.8rem; animation-duration: 14s; animation-delay: 1.7s; }
+        .float-icon:nth-child(16) { top: 95%; left: 90%; font-size: 2.2rem; animation-duration: 13s; animation-delay: 0.9s; }
+        .float-icon:nth-child(17) { top: 35%; left: 60%; font-size: 2.6rem; animation-duration: 15s; animation-delay: 2.8s; }
+        .float-icon:nth-child(18) { top: 65%; left: 30%; font-size: 2rem; animation-duration: 11s; animation-delay: 1.1s; }
+        .float-icon:nth-child(19) { top: 5%; left: 90%; font-size: 2.4rem; animation-duration: 17s; animation-delay: 0.4s; }
+        .float-icon:nth-child(20) { top: 45%; left: 20%; font-size: 3rem; animation-duration: 12s; animation-delay: 2.1s; }
+
+        @keyframes floatAnim {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            33% { transform: translate(25px, -35px) rotate(5deg) scale(1.08); }
+            66% { transform: translate(-20px, 25px) rotate(-4deg) scale(0.92); }
+            100% { transform: translate(15px, -20px) rotate(3deg) scale(1.05); }
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--orange);
+            border-radius: 50%;
+            opacity: 0;
+            animation: particleFloat 8s ease-in-out infinite;
+            box-shadow: 0 0 10px var(--orange-glow);
+        }
+
+        .particle:nth-child(1) { left: 5%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 15%; animation-delay: 1.5s; }
+        .particle:nth-child(3) { left: 25%; animation-delay: 3s; }
+        .particle:nth-child(4) { left: 35%; animation-delay: 4.5s; }
+        .particle:nth-child(5) { left: 45%; animation-delay: 0.8s; }
+        .particle:nth-child(6) { left: 55%; animation-delay: 2.3s; }
+        .particle:nth-child(7) { left: 65%; animation-delay: 5.5s; }
+        .particle:nth-child(8) { left: 75%; animation-delay: 3.8s; }
+        .particle:nth-child(9) { left: 85%; animation-delay: 1.2s; }
+        .particle:nth-child(10) { left: 95%; animation-delay: 4.2s; }
+        .particle:nth-child(11) { left: 10%; animation-delay: 2s; }
+        .particle:nth-child(12) { left: 40%; animation-delay: 5s; }
+        .particle:nth-child(13) { left: 60%; animation-delay: 1s; }
+        .particle:nth-child(14) { left: 80%; animation-delay: 3.5s; }
+        .particle:nth-child(15) { left: 20%; animation-delay: 4s; }
+
+        @keyframes particleFloat {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
+
+        .landing-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 700px;
+        }
+
+        .landing-title {
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #FF6B35, #FF8C42, #FFB347);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+            line-height: 1.1;
+        }
+
+        .landing-sub {
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: #ccc;
+            margin-bottom: 0.5rem;
+        }
+
+        .landing-sub span {
+            color: var(--orange);
+            font-weight: 600;
+        }
+
+        .landing-desc {
+            font-size: 1rem;
+            color: #999;
+            max-width: 450px;
+            margin: 1.5rem auto 2.5rem;
+            line-height: 1.8;
+            font-weight: 300;
+            letter-spacing: 0.3px;
+        }
+
+        .landing-desc small {
+            display: block;
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .btn-start {
+            background: linear-gradient(135deg, var(--orange), #FF8C42);
+            color: #fff;
+            border: none;
+            padding: 1rem 3.5rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 40px var(--orange-glow);
+            position: relative;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-start:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 60px rgba(255, 107, 53, 0.5);
+        }
+
+        .btn-start:active {
+            transform: scale(0.95);
+        }
+
+        .btn-start::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: btnShine 3s ease-in-out infinite;
+        }
+
+        @keyframes btnShine {
+            0% { transform: translate(-100%, -100%) rotate(0deg); }
+            100% { transform: translate(100%, 100%) rotate(0deg); }
+        }
+
+        /* ===== PAGE 2: SLIDESHOW ===== */
+        .page-2 {
+            height: 100vh;
+            width: 100vw;
+            background: #0a0a0a;
+            display: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-2.active {
+            display: block;
+        }
+
+        .slide-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .slide {
+            position: absolute;
+            width: 90%;
+            max-width: 500px;
+            max-height: 85vh;
+            opacity: 0;
+            transform: scale(0.95) translateY(20px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            pointer-events: none;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 0 60px rgba(255, 107, 53, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+        }
+
+        .slide img {
+            width: 100%;
+            height: auto;
+            max-height: 80vh;
+            object-fit: contain;
+            display: block;
+            border-radius: 24px;
+        }
+
+        .slide-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+            backdrop-filter: blur(4px);
+            border-radius: 0 0 24px 24px;
+        }
+
+        .slide-label span {
+            color: var(--orange);
+        }
+
+        .slide-counter {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 10;
+        }
+
+        .slide-counter span {
+            color: var(--orange);
+        }
+
+        .slide-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--orange), #FF8C42);
+            z-index: 10;
+            transition: width 0.1s linear;
+            width: 0%;
+            border-radius: 0 2px 2px 0;
+        }
+
+        .slide-controls {
+            position: absolute;
+            bottom: 4rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .slide-controls button {
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            color: #fff;
+            padding: 0.4rem 0.8rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .slide-controls button:hover {
+            background: var(--orange);
+            transform: scale(1.05);
+        }
+
+        .slide-controls button:active {
+            transform: scale(0.95);
+        }
+
+        .slide-back-btn {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: #fff;
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            z-index: 10;
+        }
+
+        .slide-back-btn:hover {
+            background: var(--orange);
+            transform: scale(1.05);
+        }
+
+        .slide-back-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 480px) {
+            .landing-title { font-size: 2.8rem; }
+            .landing-sub { font-size: 1.4rem; }
+            .landing-desc { font-size: 0.9rem; padding: 0 1rem; }
+            .btn-start { padding: 0.8rem 2.5rem; font-size: 1rem; }
+            .slide { width: 95%; max-width: 400px; }
+            .slide-label { font-size: 0.7rem; padding: 0.6rem; }
+            .slide-counter { top: 1rem; right: 1rem; font-size: 0.7rem; padding: 0.3rem 0.8rem; }
+            .slide-controls { bottom: 3rem; padding: 0.3rem 0.8rem; gap: 0.5rem; }
+            .slide-controls button { font-size: 0.7rem; padding: 0.3rem 0.6rem; }
+            .slide-back-btn { top: 1rem; left: 1rem; font-size: 0.7rem; padding: 0.3rem 0.8rem; }
+            .float-icon { font-size: 1.5rem !important; }
+        }
+
+        @media (max-width: 380px) {
+            .landing-title { font-size: 2.2rem; }
+            .slide { max-width: 95%; }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 0px; }
+    </style>
+</head>
+<body>
+
+    <!-- ===== PAGE 1 ===== -->
+    <div class="page-1" id="page1">
+        <!-- 20 آیکون شناور -->
+        <div class="floating-icons">
+            <div class="float-icon">🥕</div>
+            <div class="float-icon">🐱</div>
+            <div class="float-icon">🥛</div>
+            <div class="float-icon">🥕</div>
+            <div class="float-icon">🐱</div>
+            <div class="float-icon">🥛</div>
+            <div class="float-icon">🥕</div>
+            <div class="float-icon">🐱</div>
+            <div class="float-icon">🥛</div>
+            <div class="float-icon">🥕</div>
+            <div class="float-icon">🐱</div>
+            <div class="float-icon">🥛</div>
+            <div class="float-icon">🥕</div>
+            <div class="float-icon">🐱</div>
+            <div class="float-icon">🥛</div>
+            <div class="float-icon">🥕</div>
+            <div class="float-icon">🐱</div>
+            <div class="float-icon">🥛</div>
+            <div class="float-icon">🥕</div>
+            <div class="float-icon">🐱</div>
+        </div>
+
+        <!-- ذرات -->
+        <div class="particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+
+        <div class="landing-content">
+            <div class="landing-title">سالامممم</div>
+            <div class="landing-sub">
+                <span>AKARI</span> (هویج پیر)
+            </div>
+            <div class="landing-desc">
+                This place was made for Akari.
+                <small>If you're not Akari, you should probably leave.</small>
+            </div>
+            <button class="btn-start" onclick="goToSlideshow()">
+                ⟳ Start
+            </button>
+        </div>
+    </div>
+
+    <!-- ===== PAGE 2: SLIDESHOW ===== -->
+    <div class="page-2" id="page2">
+        <div class="floating-icons" style="z-index:0; opacity:0.5;">
+            <div class="float-icon">🥕</div>
+            <div class="float-icon">🐱</div>
+            <div class="float-icon">🥛</div>
+            <div class="float-icon">🥕</div>
+            <div class="float-icon">🐱</div>
+            <div class="float-icon">🥛</div>
+            <div class="float-icon">🥕</div>
+            <div class="float-icon">🐱</div>
+            <div class="float-icon">🥛</div>
+            <div class="float-icon">🥕</div>
+            <div class="float-icon">🐱</div>
+            <div class="float-icon">🥛</div>
+            <div class="float-icon">🥕</div>
+            <div class="float-icon">🐱</div>
+            <div class="float-icon">🥛</div>
+            <div class="float-icon">🥕</div>
+            <div class="float-icon">🐱</div>
+            <div class="float-icon">🥛</div>
+            <div class="float-icon">🥕</div>
+            <div class="float-icon">🐱</div>
+        </div>
+
+        <button class="slide-back-btn" onclick="goBack()">← بازگشت</button>
+        <div class="slide-counter">بیلبیلک <span id="currentSlideNum">۱</span> از <span id="totalSlides">۱۷</span></div>
+
+        <div class="slide-container" id="slideContainer">
+            <!-- اسلایدها با جاوااسکریپت ساخته میشن -->
+        </div>
+
+        <div class="slide-progress" id="slideProgress"></div>
+
+        <div class="slide-controls">
+            <button onclick="prevSlide()">‹ قبلی</button>
+            <button onclick="togglePlay()" id="playBtn">⏸ توقف</button>
+            <button onclick="nextSlide()">بعدی ›</button>
+        </div>
+    </div>
+
+    <script>
+        // ===== لیست عکس‌ها از پوشه images =====
+        // عکس‌ها باید با اسم 1.jpg تا 17.jpg در پوشه images باشن
+        const images = [];
+        for (let i = 1; i <= 17; i++) {
+            images.push('images/' + i + '.jpg');
+        }
+
+        let currentIndex = 0;
+        let isPlaying = true;
+        let timer = null;
+        const slideDuration = 5000; // ۵ ثانیه
+
+        const container = document.getElementById('slideContainer');
+        const totalSlides = images.length;
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        // ===== ساخت اسلایدها =====
+        images.forEach((src, index) => {
+            const num = index + 1;
+            const slide = document.createElement('div');
+            slide.className = 'slide';
+            if (index === 0) slide.classList.add('active');
+            slide.innerHTML = `
+                <img src="${src}" alt="بیلبیلک شماره ${num}" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22500%22 viewBox=%220 0 400 500%22%3E%3Crect fill=%22%231a0a00%22 width=%22400%22 height=%22500%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23FF6B35%22 font-family=%22sans-serif%22 font-size=%2224%22%3E🥕 ${num}%3C/text%3E%3C/svg%3E'" />
+                <div class="slide-label">بیلبیلک شماره <
